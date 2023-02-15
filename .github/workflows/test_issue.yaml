@@ -52,8 +52,8 @@ jobs:
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
           ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }} # do we need to pass this to vault admin? can close it in another action?
 #        run: echo $ISSUE_URL  
-        run: |
-#          curl -X GET $ISSUE_URL
+        run: curl -X GET $ISSUE_URL
+#          
 #      - run: |
 #          curl -X POST "https://vauld-admin.rdswf.net/teams -d '{ "team": "$TEAM", "objectId": "$OBJECT_ID", "url": "${{ steps.create-issue.outputs.url }}"}'
 #      - run: echo "{status}={??}" >> $GITHUB_OUTPUT
