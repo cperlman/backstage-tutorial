@@ -4,6 +4,10 @@ on:
       team_name:
         description: 'Team name, will be used to create policy, role and KV store'
         required: true
+      azure_object_id:
+        description: 'Azure AD group object ID, used for Vault group alias'
+        required: true
+
 
 name: Create an issue on push
 permissions:
@@ -18,3 +22,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TEAM: ${{ github.event.inputs.team_name }}
+          OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
+
