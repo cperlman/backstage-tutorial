@@ -36,18 +36,18 @@ jobs:
     needs: create-issue
     runs-on: ubuntu-latest
     steps:
-      - name: Call Vault Admin
-        env:
-          TEAM: ${{ github.event.inputs.team_name }}
-          OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
-          ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }}  # do we need to pass this to vault admin? can close it in another action?
-        run: 'echo URL: $ISSUE_URL'
+#      - name: Call Vault Admin
+#        env:
+#          TEAM: ${{ github.event.inputs.team_name }}
+#          OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
+#          ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }}  # do we need to pass this to vault admin? can close it in another action?
+#        run: 'echo URL: $ISSUE_URL'
       - name: Curl it
         id: call-vault-admin
         env:
           TEAM: ${{ github.event.inputs.team_name }}
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
-#          ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }}
+          ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }}
         # update this to call vault admin app instead when that's available
         run: response_status=`curl --silent --connect-timeout 5 --output /dev/null $ISSUE_URL -I -w "%{http_code}\n"`
       - run: echo "status=${{ steps.call-vault-admin.outputs.response_status }}" >> $GITHUB_OUTPUT
