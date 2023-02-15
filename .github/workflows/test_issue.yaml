@@ -67,10 +67,10 @@ jobs:
       - run: echo $ISSUE_NUMBER
       - uses: peter-evans/close-issue@v2
         with:
-          issue-number: 14
+#          issue-number: 14
           comment: Onboarding completed!
           token: ${{ secrets.GITHUB_TOKEN }}
-#          issue-number: $ISSUE_NUMBER          
+          issue-number: ${{ needs.call-vault-admin.outputs.issue_number }}
           
 #      - run: |
 #          curl -X POST "https://vauld-admin.rdswf.net/teams -d '{ "team": "$TEAM", "objectId": "$OBJECT_ID" }'
