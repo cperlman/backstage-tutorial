@@ -1,13 +1,13 @@
 ---
-name: Vault onboarding for team {{ env.TEAM }}
+name: Vault onboarding request
 about: Default Vault onboarding template
-title: Vault onboarding
+title: Vault onboarding for {{ env.TEAM }}
 labels: vault-onboarding
 assignees: ''
 
 ---
 
-**Your team name (this will be reflected in the role you'll use to log in to Vault and in the path of your KV store)**
+**Your team name**
 {{ env.TEAM }}
 
 **The objectID for your Azure AD group**
