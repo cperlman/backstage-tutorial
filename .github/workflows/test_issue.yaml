@@ -58,21 +58,20 @@ jobs:
   close-issue:
     needs: call-vault-admin
     runs-on: ubuntu-latest
+    env: 
+      ISSUE_NUMBER: ${{ needs.call-vault-admin.outputs.issue_number }}
 #    if: ${{ needs.call-vault-admin.outputs.status }} == 200
     steps: 
-      - env:
-          ISSUE_NUMBER: ${{ needs.call-vault-admin.outputs.issue_number }}
-        run: echo $ISSUE_NUMBER
-      - name: Close Issue
-        uses: peter-evans/close-issue@v2
-        env:
-          ISSUE_NUMBER: ${{ needs.call-vault-admin.outputs.issue_number }}
+#      - env:
+#          ISSUE_NUMBER: ${{ needs.call-vault-admin.outputs.issue_number }}
+      - run: echo $ISSUE_NUMBER
+      - uses: peter-evans/close-issue@v2
         with:
           issue-number: $ISSUE_NUMBER
           comment: Onboarding completed!
           
           
 #      - run: |
-#          curl -X POST "https://vauld-admin.rdswf.net/teams -d '{ "team": "$TEAM", "objectId": "$OBJECT_ID", "url": "${{ steps.create-issue.outputs.url }}"}'
+#          curl -X POST "https://vauld-admin.rdswf.net/teams -d '{ "team": "$TEAM", "objectId": "$OBJECT_ID" }'
 
 
