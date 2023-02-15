@@ -59,8 +59,9 @@ jobs:
   close-issue:
     needs: call-vault-admin # kan man ha flera needs?
     runs-on: ubuntu-latest
-    if: ${{ needs.call-vault-admin.outputs.status }} == 200
+#    if: ${{ needs.call-vault-admin.outputs.status }} == 200
     steps: 
+      - run: echo ${{ needs.create-issue.outputs.issue_number }}
       - name: Close Issue
         uses: peter-evans/close-issue@v2
         with:
