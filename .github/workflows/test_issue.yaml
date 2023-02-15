@@ -28,8 +28,8 @@ jobs:
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
         with:
           filename: .github/ISSUE_TEMPLATE/vault-onboarding-for-team--team-.md
-      - run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
-      - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
+#      - run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
+#      - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
       - run: echo "issue_number=${{ steps.create-issue.outputs.number }}" >> $GITHUB_OUTPUT
       - run: echo "issue_url=${{ steps.create-issue.outputs.url }}" >> $GITHUB_OUTPUT
     outputs:
@@ -46,15 +46,27 @@ jobs:
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
           ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }}  # do we need to pass this to vault admin? can close it in another action?
         run: 'echo URL: $ISSUE_URL'
-      - name: Curl it   
+      - name: Curl it
+        id: call-vault-admin
         env:
           TEAM: ${{ github.event.inputs.team_name }}
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
           ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }} # do we need to pass this to vault admin? can close it in another action?
-#        run: echo $ISSUE_URL  
-        run: curl -X GET $ISSUE_URL
-#          
+        run: response_status=`curl --silent --connect-timeout 5 --output /dev/null $ISSUE_URL -I -w "%{http_code}\n"`
+      - run: echo "status=${{ steps.call-vault-admin.outputs.response_status }}" >> $GITHUB_OUTPUT
+    outputs:
+      status: ${{ steps.call-vault-admin.outputs.status }}
+  close-issue:
+    needs: call-vault-admin # kan man ha flera needs?
+    runs-on: ubuntu-latest
+    if: ${{ needs.call-vault-admin.outputs.status }} == 200
+    steps: 
+      - name: Close Issue
+        uses: peter-evans/close-issue@v2
+        with:
+          issue-number: ${{ needs.create-issue.outputs.issue_number }}
+          comment: Onboarding completed, closing issue.
 #      - run: |
 #          curl -X POST "https://vauld-admin.rdswf.net/teams -d '{ "team": "$TEAM", "objectId": "$OBJECT_ID", "url": "${{ steps.create-issue.outputs.url }}"}'
-#      - run: echo "{status}={??}" >> $GITHUB_OUTPUT
+
 
