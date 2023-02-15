@@ -1,9 +1,3 @@
-workflow_dispatch:
-    inputs: 
-      team_name:
-        description: 'Team name, will be used to create policy, role and KV store'
-        required: true
-
 on: 
   workflow_dispatch:
     inputs: 
