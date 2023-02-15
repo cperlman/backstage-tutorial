@@ -51,23 +51,25 @@ jobs:
         # update this to call vault admin app instead when that's available
         run: response_status=`curl --silent --connect-timeout 5 --output /dev/null $ISSUE_URL -I -w "%{http_code}\n"`
       - run: echo "status=${{ steps.call-vault-admin.outputs.response_status }}" >> $GITHUB_OUTPUT
+      - run: echo "issue_number=${{ needs.create-issue.outputs.issue_number }}" >> $GITHUB_OUTPUT
     outputs:
       status: ${{ steps.call-vault-admin.outputs.status }}
+      issue_number: ${{ needs.create-issue.outputs.issue_number }}
   close-issue:
-    needs: call-vault-admin # kan man ha flera needs?
+    needs: call-vault-admin
     runs-on: ubuntu-latest
 #    if: ${{ needs.call-vault-admin.outputs.status }} == 200
     steps: 
       - env:
-          ISSUE_NUMBER: ${{ needs.create-issue.outputs.issue_number }}
+          ISSUE_NUMBER: ${{ needs.call-vault-admin.outputs.issue_number }}
         run: echo $ISSUE_NUMBER
       - name: Close Issue
         uses: peter-evans/close-issue@v2
         env:
-          ISSUE_NUMBER: ${{ needs.create-issue.outputs.issue_number }}
+          ISSUE_NUMBER: ${{ needs.call-vault-admin.outputs.issue_number }}
         with:
           issue-number: $ISSUE_NUMBER
-          comment: Onboarding completed, closing issue.
+          comment: Onboarding completed!
           
           
 #      - run: |
