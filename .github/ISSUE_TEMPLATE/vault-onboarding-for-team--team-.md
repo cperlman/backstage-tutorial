@@ -2,7 +2,7 @@
 name: Vault onboarding request
 about: Default Vault onboarding template
 title: Vault onboarding for {{ env.TEAM }}
-labels: vault-onboarding
+labels: onboarding
 assignees: ''
 
 ---
