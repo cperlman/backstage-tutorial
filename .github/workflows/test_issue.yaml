@@ -30,7 +30,8 @@ jobs:
           filename: .github/ISSUE_TEMPLATE/vault-onboarding-for-team--team-.md
       - run: 'echo Created issue number ${{ steps.create-issue.outputs.number }}'
       - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
-  #    - run: echo "url=${{ steps.create-issue.outputs.url }}" >> $GITHUB_OUTPUT
+      - run: echo "issue_number=${{ steps.create-issue.outputs.number }}" >> $GITHUB_OUTPUT
+      - run: echo "issue_url=${{ steps.create-issue.outputs.url }}" >> $GITHUB_OUTPUT
     outputs:
       issue_number: ${{ steps.create-issue.outputs.number }}
       issue_url: ${{ steps.create-issue.outputs.url }}  
@@ -43,7 +44,7 @@ jobs:
         env:
           TEAM: ${{ github.event.inputs.team_name }}
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
-          ISSUE_URL: ${{needs.create-issue.outputs.issue_url}}  # do we need to pass this to vault admin? can close it in another action?
+          ISSUE_URL: ${{ needs.create-issue.outputs.issue_url }}  # do we need to pass this to vault admin? can close it in another action?
         run: 'echo URL: $ISSUE_URL'   
       - name: Curl it   
         env:
