@@ -23,4 +23,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TEAM: ${{ github.event.inputs.team_name }}
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/vault-onboarding-for-team--team-.md
 
