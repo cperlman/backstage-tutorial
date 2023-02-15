@@ -1,0 +1,26 @@
+workflow_dispatch:
+    inputs: 
+      team_name:
+        description: 'Team name, will be used to create policy, role and KV store'
+        required: true
+
+on: 
+  workflow_dispatch:
+    inputs: 
+      team_name:
+        description: 'Team name, will be used to create policy, role and KV store'
+        required: true
+
+    name: Create an issue on push
+    permissions:
+      contents: read
+      issues: write 
+    jobs:
+      stuff:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: JasonEtco/create-an-issue@v2
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              team: ${{ github.event.inputs.team_name }}
