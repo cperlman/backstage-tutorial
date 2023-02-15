@@ -7,7 +7,9 @@ on:
       azure_object_id:
         description: 'Azure AD group object ID, used for Vault group alias'
         required: true
-
+      issue_number:
+        description: 'Issue number'
+        default: '0'
 
 name: Create an issue
 permissions:
@@ -30,7 +32,7 @@ jobs:
       - run: 'echo Created ${{ steps.create-issue.outputs.url }}'
   # this should be conditional
   call-vault-admin:
-    if: ${{ steps.create-issue.outputs.number }} != null
+   # if: ${{ steps.create-issue.outputs.number }} != null
     runs-on: ubuntu-latest
     steps:
       - name: Call Vault Admin
