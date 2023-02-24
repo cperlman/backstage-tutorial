@@ -12,3 +12,6 @@ assignees: ''
 
 **The objectID for your Azure AD group**
 {{ env.OBJECT_ID }}
+
+**Contact person (CDSID)**
+{{ env.CONTACT }}
