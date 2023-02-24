@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+    inputs:
+      team_name:
+        description: 'Team name, will be used to create policy, role and KV store'
+        required: true
+      azure_object_id:
+        description: 'Azure AD group object ID, used for Vault group alias'
+        required: true
+
+name: Create request for Vault access
+permissions:
+  contents: read
+  issues: write
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JasonEtco/create-an-issue@v2
+        id: create-issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TEAM: ${{ github.event.inputs.team_name }}
+          OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
+        with:
+          filename: .github/ISSUE_TEMPLATE/vault-onboarding-request.md
+      - run: echo "issue_number=${{ steps.create-issue.outputs.number }}" >> $GITHUB_OUTPUT
+      - run: echo "issue_url=${{ steps.create-issue.outputs.url }}" >> $GITHUB_OUTPUT
+    outputs:
+      issue_number: ${{ steps.create-issue.outputs.number }}
+      issue_url: ${{ steps.create-issue.outputs.url }}
