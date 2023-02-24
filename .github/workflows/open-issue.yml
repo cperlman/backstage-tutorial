@@ -7,6 +7,9 @@ on:
       azure_object_id:
         description: 'Azure AD group object ID, used for Vault group alias'
         required: true
+      contact:
+        description: 'Contact person (CDSID)'
+        required: true
 
 name: Create request for Vault access
 permissions:
@@ -23,6 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TEAM: ${{ github.event.inputs.team_name }}
           OBJECT_ID: ${{ github.event.inputs.azure_object_id }}
+          CONTACT: ${{ github.event.inputs.contact }}
         with:
           filename: .github/ISSUE_TEMPLATE/vault-onboarding-request.md
       - run: echo "issue_number=${{ steps.create-issue.outputs.number }}" >> $GITHUB_OUTPUT
