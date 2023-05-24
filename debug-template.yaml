@@ -39,3 +39,4 @@ spec:
         message: |
           Your request for access has been received, you can follow the progress
           <a href="https://github.com/volvo-cars/rdswf-vault-onboarder/issues">here</a>
+          or [here](https://github.com/volvo-cars/rdswf-vault-onboarder/issues)
