@@ -40,3 +40,11 @@ spec:
           Your request for access has been received, you can follow the progress
           <a href="https://github.com/volvo-cars/rdswf-vault-onboarder/issues">here</a>
           or [here](https://github.com/volvo-cars/rdswf-vault-onboarder/issues)
+    - id: log2
+    #  needs: run-onboarding
+      name: Log output
+      action: debug:log
+      input:
+        message: |
+          Your request for access has been received, you can follow the progress
+          [here](https://github.com/volvo-cars/rdswf-vault-onboarder/issues)
