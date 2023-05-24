@@ -1,11 +1,11 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: vault-onboarding
+  name: testing-something
   title: Templating playground
   description: Just logs stuff
   tags:
-    - vault
+    - test
 spec:
   owner: group:cld-rdswf-devsecops
   type: service
@@ -22,17 +22,17 @@ spec:
           description: The object ID of the group or user in Azure active directory
 
   steps:
-    - id: run-onboarding
-      name: Run onboarding
-      action: github:actions:dispatch
-      input:
-        repoUrl: 'github.com?repo=rdswf-vault-onboarder&owner=volvo-cars'
-        workflowId: 'open-issue.yaml'
-        branchOrTagName: 'main'
-        workflowInputs:
-          azure_object_id: ${{ parameters.azure_object_id }}
+    # - id: run-onboarding
+    #   name: Run onboarding
+    #   action: github:actions:dispatch
+    #   input:
+    #     repoUrl: 'github.com?repo=rdswf-vault-onboarder&owner=volvo-cars'
+    #     workflowId: 'open-issue.yaml'
+    #     branchOrTagName: 'main'
+    #     workflowInputs:
+    #       azure_object_id: ${{ parameters.azure_object_id }}
     - id: log
-      needs: run-onboarding
+    #  needs: run-onboarding
       name: Log output
       action: debug:log
       input:
